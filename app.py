@@ -10,13 +10,14 @@ from utils import get_max_token_for_model, get_file_type, loader_from_file_from_
 import tempfile
 import os
 temp_dir = tempfile.TemporaryDirectory()
+OPENAI_API_KEY = None
 
 st.title("📄📒📰🦜 Multi-Docs Summarizer")
 st.markdown("## Welcome to the Multi-Docs Summarizer")
-st.markdown("#### Please enter your OPENAI_API_KEY to access the service.")
 OPENAI_API_KEY = st.text_input(label="OPENAI_API_KEY", type="password")
-# Add OPENAI_API_KEY to env
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+if not OPENAI_API_KEY:
+  st.warning('Please input a OPENAI_API_KEY to access the service.')
+  st.stop()
 model = st.radio("Model", options=["gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4", "gpt-4-32k"], index=0)
 
 
@@ -28,7 +29,7 @@ llm = ChatOpenAI(temperature=0,
                  max_tokens=get_max_token_for_model(model=None)
                  )
 
-st.markdown("## Upload your documents")
+st.markdown("### Upload the set of documents you want to summarize")
 
 
 ## Ask for data and read it
