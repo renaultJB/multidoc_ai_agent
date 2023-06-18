@@ -1,0 +1,7 @@
+langchain
+streamlit
+openai
+tiktoken
+pypdf
+docx2txt
+unstructured
